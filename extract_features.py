@@ -20,8 +20,8 @@ def extractFecNet(files, buff):
         output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
         output_file_path = os.path.join(output_path, output_file_name)
         
-        # if(os.path.isfile(output_file_path)):
-        #     continue
+        if(os.path.isfile(output_file_path)):
+            continue
         try:
             vidcap = VideoFileClip(file)
             frames = list(vidcap.iter_frames(fps=5))
@@ -50,7 +50,7 @@ def fecnet_extract_in_parallel(concurreny_count, files, fn):
     # block until all the threads finish (i.e. block until all function_x calls finish)
     for t in Processes:    t.join()
     
-concurreny_count = 5
+concurreny_count = 15
 meta_file_path = sys.argv[1]
 files = pd.read_csv(meta_file_path, header=None).values[:,0]
 fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
