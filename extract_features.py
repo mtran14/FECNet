@@ -8,12 +8,14 @@ import cv2
 from moviepy.editor import *
 import pandas as pd
 from multiprocessing import Process, Manager
+import random
 
 output_path = "/shares/perception-temp/voxceleb2/fecnet/train/"
 
 def extractFecNet(files, buff):
     model = FECNet('FECNet.pt')
     mtcnn = MTCNN(image_size=224)
+    random.shuffle(files)
     for file in files:
         try:
             file_path_split = file.split("/")
