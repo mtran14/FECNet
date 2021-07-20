@@ -31,10 +31,10 @@ def extractFecNet(files, buff):
         faces, prob = mtcnn(frames, return_prob=True)
         faces = [t.numpy() for t in faces]
         faces = np.array(faces)
-        if face.any():
-            face = torch.Tensor(face).view(-1,3,224,224)
-            emb = model(face.cuda()).cpu()
-            emb = emb.detach().cpu().numpy()
+        if faces.any():
+            faces = torch.Tensor(faces).view(-1,3,224,224)
+            emb = model(faces.cuda()).cpu()
+            emb = emb.detach().numpy()
             pd.DataFrame(emb).to_csv(output_file_path, header=None, index=False)
             
 def fecnet_extract_in_parallel(concurreny_count, files, fn):
