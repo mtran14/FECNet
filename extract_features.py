@@ -6,6 +6,7 @@ from facenet_pytorch import MTCNN
 from PIL import Image
 import cv2
 from moviepy.editor import *
+import pandas as pd
 
 output_path = "/shares/perception-temp/voxceleb2/fecnet/train/"
 
