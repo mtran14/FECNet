@@ -1,4 +1,4 @@
-import os
+import os, sys
 import numpy as np
 import torch
 from models.FECNet import FECNet
@@ -7,6 +7,7 @@ from PIL import Image
 import cv2
 from moviepy.editor import *
 import pandas as pd
+from multiprocessing import Process, Manager
 
 output_path = "/shares/perception-temp/voxceleb2/fecnet/train/"
 
