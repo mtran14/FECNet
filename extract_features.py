@@ -81,7 +81,7 @@ files = pd.read_csv(meta_file_path, header=None).values[:,0]
 pp = ParallelProcessor(64, extractFecNet, progress=progress, progress_total=len(files))
 pp.start()
 
-pp.map(files)
+pp.map(list(files))
 
 pp.task_done()
 pp.join()
