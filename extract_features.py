@@ -36,7 +36,7 @@ def extractFacenet(files, buff):
         # except:
         #     continue
 
-def extractFecNet(files):
+def extractFecNet(files, buff):
     random.shuffle(files)
     model = FECNet('FECNet.pt').cuda()
     mtcnn = MTCNN(image_size=224)
@@ -61,6 +61,7 @@ def extractFecNet(files):
                 emb = model(faces)
                 emb = emb.detach().numpy()
                 pd.DataFrame(emb).to_csv(output_file_path, header=None, index=False)
+                print(output_file_path)
         except:
             continue
             
@@ -99,7 +100,7 @@ def fecnet_extract_in_parallel(concurreny_count, files, fn):
     # files_  =  [files[(i* (len(files)//concurreny_count)):((i+1)* (len(files)//concurreny_count))]    for i in range(concurreny_count)]
     # leftovers  =  files[(concurreny_count * (len(files)//concurreny_count))  :  len(files)]
     # for i in range(len(leftovers)):    files_[i] += [leftovers[i]]
-    files_ = np.array_split(files, len(files)//concurreny_count)
+    files_ = np.array_split(files, concurreny_count)
     random.shuffle(files_)
     for  files_list_  in files_:
         p = Process(target=fn, args=(files_list_, files_list_))
@@ -127,7 +128,7 @@ concurreny_count = 10
 meta_file_path = "../mm_ted/data/file_paths_fm.csv"
 files = pd.read_csv(meta_file_path, header=None).values[:,0]
 
-facenet_extract_in_parallel(concurreny_count, files, extractFacenet)
+fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
 # 
 # # extractFecNet(files)
 # # fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
