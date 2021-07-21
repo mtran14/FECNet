@@ -28,8 +28,8 @@ def extractFecNet(files, buff):
         vidcap = VideoFileClip(file)
         frames = list(vidcap.iter_frames(fps=5))
         
-        print(len(frames))
         faces, prob = mtcnn(frames, return_prob=True)
+        print(len(faces))
         faces = [t.numpy() for t in faces]
         faces = np.array(faces)
         if faces.any():
