@@ -9,7 +9,7 @@ from moviepy.editor import *
 import pandas as pd
 from multiprocessing import Process, Manager
 import random
-torch.multiprocessing.set_start_method('spawn')
+
 output_path = "/shares/perception-temp/voxceleb2/fecnet/train/"
 
 def extractFecNetMultiVid(files):
