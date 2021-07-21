@@ -101,6 +101,7 @@ files = pd.read_csv(meta_file_path, header=None).values[:,0]
 # random.shuffle(files_)
 # for files in files_:
 #     extractFecNetMultiVid(files)
+random.shuffle(files)
 pool = multiprocessing.Pool(4)
 pool.map(extractFecNetSingle, files)
 pool.close()
