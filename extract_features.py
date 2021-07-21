@@ -2,8 +2,8 @@
 import os, sys
 import numpy as np
 import torch
-# from models.FECNet import FECNet
-# from facenet_pytorch import MTCNN
+from models.FECNet import FECNet
+from facenet_pytorch import MTCNN
 from PIL import Image
 import cv2
 from moviepy.editor import *
@@ -11,7 +11,7 @@ import pandas as pd
 from multiprocessing import Process, Manager, Pool
 import multiprocessing
 import random
-from deepface import DeepFace
+# from deepface import DeepFace
 
 output_path = "/data/perception-temp/voxceleb2/facenet/train/"
 
