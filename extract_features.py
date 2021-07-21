@@ -14,6 +14,8 @@ import random
 from pyrallel import ParallelProcessor
 
 output_path = "/data/perception-temp/voxceleb2/fecnet/train/"
+model = FECNet('FECNet.pt')
+mtcnn = MTCNN(image_size=224)
 
 def extractFecNet(files):
     random.shuffle(files)
@@ -44,8 +46,6 @@ def extractFecNet(files):
             continue
             
 def extractFecNetSingle(file):
-    model = FECNet('FECNet.pt')
-    mtcnn = MTCNN(image_size=224)
     try:
         file_path_split = file.split("/")
         id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
