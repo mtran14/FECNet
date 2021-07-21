@@ -1,3 +1,4 @@
+#!/home/ICT2000/mtran/miniconda3/envs/torch/bin/python
 import os, sys
 import numpy as np
 import torch
@@ -55,7 +56,7 @@ def fecnet_extract_in_parallel(concurreny_count, files, fn):
     
 target_chunk_size = 5
 concurreny_count = 10
-meta_file_path = sys.argv[1]
+meta_file_path = "../mm_ted/data/file_paths_fm.csv"
 files = pd.read_csv(meta_file_path, header=None).values[:,0]
 
 extractFecNet(files, files)
