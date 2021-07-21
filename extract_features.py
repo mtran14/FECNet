@@ -17,23 +17,24 @@ output_path = "/data/perception-temp/voxceleb2/facenet/train/"
 
 def extractFacenet(files, files):
     for file in files:
-        try:
-            file_path_split = file.split("/")
-            id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
-            output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
-            output_file_path = os.path.join(output_path, output_file_name)
-            
-            if(os.path.isfile(output_file_path)):
-                continue
-            
-            vidcap = VideoFileClip(file)
-            frames = list(vidcap.iter_frames(fps=5))
-            
-            embeddings = [DeepFace.represent(frame, model_name = 'Facenet') for frame in frames]
-            embeddings = np.array(embeddings)
-            pd.DataFrame(embeddings).to_csv(output_file_path, header=None, index=False)
-        except:
+        # try:
+        file_path_split = file.split("/")
+        id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
+        output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
+        output_file_path = os.path.join(output_path, output_file_name)
+        
+        if(os.path.isfile(output_file_path)):
             continue
+        
+        vidcap = VideoFileClip(file)
+        frames = list(vidcap.iter_frames(fps=5))
+        
+        embeddings = [DeepFace.represent(frame, model_name = 'Facenet') for frame in frames]
+        embeddings = np.array(embeddings)
+        pd.DataFrame(embeddings).to_csv(output_file_path, header=None, index=False)
+        print(output_file_path)
+        # except:
+        #     continue
 
 def extractFecNet(files):
     random.shuffle(files)
