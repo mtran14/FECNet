@@ -14,8 +14,6 @@ import random
 
 
 output_path = "/data/perception-temp/voxceleb2/fecnet/train/"
-model = FECNet('FECNet.pt')
-mtcnn = MTCNN(image_size=224)
 
 def extractFecNet(files):
     random.shuffle(files)
@@ -47,6 +45,9 @@ def extractFecNet(files):
             
 def extractFecNetSingle(file):
     # try:
+    model = FECNet('FECNet.pt')
+    mtcnn = MTCNN(image_size=224)
+    print('done loading ')
     file_path_split = file.split("/")
     id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
     output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
@@ -84,13 +85,6 @@ def fecnet_extract_in_parallel(concurreny_count, files, fn):
         p.start()
     # block until all the threads finish (i.e. block until all function_x calls finish)
     for t in Processes:    t.join()
-    
-def progress(p):
-
-    # print('Total task: {}, Added to queue: {}, Mapper Loaded: {}, Mapper Processed {}'.format(
-    #    p['total'], p['added'], p['loaded'], p['processed']))
-    if p['processed'] % 10 == 0:
-        print('Progress: {}%'.format(100.0 * p['processed'] / p['total']))
         
 target_chunk_size = 5
 concurreny_count = 10
