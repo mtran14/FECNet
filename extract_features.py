@@ -9,7 +9,7 @@ import cv2
 from moviepy.editor import *
 import pandas as pd
 from multiprocessing import Process, Manager, Pool
-imprt multiprocessing
+import multiprocessing
 import random
 
 
