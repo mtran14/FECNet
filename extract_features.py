@@ -68,7 +68,7 @@ def extractFecNetSingle(file):
             pd.DataFrame(emb).to_csv(output_file_path, header=None, index=False)
             print('here')
     except:
-        continue
+        pass
 
             
 def fecnet_extract_in_parallel(concurreny_count, files, fn):
