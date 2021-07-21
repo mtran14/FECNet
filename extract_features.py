@@ -13,7 +13,7 @@ import multiprocessing
 import random
 # from deepface import DeepFace
 
-output_path = "/data/perception-temp/voxceleb2/facenet/train/"
+output_path = "/data/perception-temp/voxceleb2/fecnet/train/"
 
 def extractFacenet(files, buff):
     for file in files:
@@ -124,7 +124,7 @@ def facenet_extract_in_parallel(concurreny_count, files, fn):
     for t in Processes:    t.join()
         
 target_chunk_size = 5
-concurreny_count = 10
+concurreny_count = 100
 meta_file_path = "../mm_ted/data/file_paths_fm.csv"
 files = pd.read_csv(meta_file_path, header=None).values[:,0]
 random.shuffle(files)
