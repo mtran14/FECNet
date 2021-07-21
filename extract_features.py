@@ -58,7 +58,8 @@ concurreny_count = 10
 meta_file_path = sys.argv[1]
 files = pd.read_csv(meta_file_path, header=None).values[:,0]
 
-fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
+extractFecNet(files, files)
+# fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
 # concurreny_count = len(files) // target_chunk_size
 # 
 # files_ = np.array_split(files, concurreny_count)
