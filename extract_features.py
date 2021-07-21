@@ -110,6 +110,4 @@ mtcnn = MTCNN(image_size=224)
 pool = multiprocessing.Pool(4)
 files_ = np.array_split(files, concurreny_count)
 random.shuffle(files_)
-for files in files_:
-    pool.apply_async(extractFecNetNNN, args = (files, ))
-pool.close()
+results =  [pool.apply(extractFecNetNNN, args = (files, )) for files in files_]
