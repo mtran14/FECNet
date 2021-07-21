@@ -50,7 +50,7 @@ def extractFecNetMultiVid(files):
     emb_split = np.split(emb, chunk_sizes)
     for i in range(len(output_file_names)):
         dout, fout = emb_split[i], output_file_names[i]
-        pd.DataFrame(dout).to_csv(fout, header=None, index=False)_
+        pd.DataFrame(dout).to_csv(fout, header=None, index=False)
     
 
 def extractFecNet(files, buff):
