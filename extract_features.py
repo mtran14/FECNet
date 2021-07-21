@@ -101,9 +101,7 @@ files = pd.read_csv(meta_file_path, header=None).values[:,0]
 # fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
 concurreny_count = len(files) // target_chunk_size
 
-files_  =  [files[(i* (len(files)//concurreny_count)):((i+1)* (len(files)//concurreny_count))]    for i in range(concurreny_count)]
-leftovers  =  files[(concurreny_count * (len(files)//concurreny_count))  :  len(files)]
-for i in range(len(leftovers)):    files_[i] += [leftovers[i]]
+files_ = np.array_split(files, concurreny_count)
 
 for files in files_:
     print(files[0:3])
