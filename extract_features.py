@@ -49,7 +49,6 @@ def extractFecNetSingle(file):
     model = FECNet('FECNet.pt')
     mtcnn = MTCNN(image_size=224)
     # try:
-    print('done loading ...')
     file_path_split = file.split("/")
     id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
     output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
@@ -64,6 +63,7 @@ def extractFecNetSingle(file):
     faces, prob = mtcnn(frames, return_prob=True)
     faces = [t.numpy() for t in faces]
     faces = np.array(faces)
+    print(faces.shape)
     if faces.any():
         faces = torch.Tensor(faces).view(-1,3,224,224)
         emb = model(faces)
