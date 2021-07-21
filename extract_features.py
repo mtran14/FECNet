@@ -97,7 +97,7 @@ def fecnet_extract_in_parallel(concurreny_count, files, fn):
     for t in Processes:    t.join()
     
 target_chunk_size = 50
-concurreny_count = 20
+concurreny_count = 5
 meta_file_path = sys.argv[1]
 files = pd.read_csv(meta_file_path, header=None).values[:,0]
 
