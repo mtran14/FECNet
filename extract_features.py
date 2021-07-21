@@ -15,7 +15,7 @@ from deepface import DeepFace
 
 output_path = "/data/perception-temp/voxceleb2/facenet/train/"
 
-def extractFacenet(files, files):
+def extractFacenet(files, buff):
     for file in files:
         # try:
         file_path_split = file.split("/")
