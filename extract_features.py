@@ -102,7 +102,6 @@ files = pd.read_csv(meta_file_path, header=None).values[:,0]
 concurreny_count = len(files) // target_chunk_size
 
 files_ = np.array_split(files, concurreny_count)
-
+random.shuffle(files_)
 for files in files_:
-    print(files[0:3])
     extractFecNetMultiVid(files)
