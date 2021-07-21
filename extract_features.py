@@ -20,6 +20,7 @@ def extractFecNetMultiVid(files):
     idx = 0
     output_file_names = []
     random.shuffle(files)
+    shapes = []
     for file in files:
         # try:
         file_path_split = file.split("/")
@@ -41,6 +42,7 @@ def extractFecNetMultiVid(files):
         idx = idx + faces.shape[0]
         chunk_sizes.append(idx)
         output_file_names.append(output_file_path)
+        shapes.append(faces.shape[0])
         # except:
         #     continue
     all_faces = np.concatenate(combine_faces, axis=0)
@@ -50,6 +52,7 @@ def extractFecNetMultiVid(files):
     emb_split = np.split(emb, chunk_sizes)
     for i in range(len(output_file_names)):
         dout, fout = emb_split[i], output_file_names[i]
+        print(dout.shape[0], shapes[i])
         pd.DataFrame(dout).to_csv(fout, header=None, index=False)
     
 
