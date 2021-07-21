@@ -8,10 +8,10 @@ from PIL import Image
 import cv2
 from moviepy.editor import *
 import pandas as pd
-from multiprocessing import Process, Manager
+from multiprocessing import Process, Manager, Pool
+imprt multiprocessing
 import random
 
-from pyrallel import ParallelProcessor
 
 output_path = "/data/perception-temp/voxceleb2/fecnet/train/"
 model = FECNet('FECNet.pt')
@@ -105,10 +105,6 @@ files = pd.read_csv(meta_file_path, header=None).values[:,0]
 # random.shuffle(files_)
 # for files in files_:
 #     extractFecNetMultiVid(files)
-pp = ParallelProcessor(4, extractFecNetSingle)
-pp.start()
-
-pp.map(list(files))
-
-pp.task_done()
-pp.join()
+pool = multiprocessing.Pool(10)
+pool.map(extractFecNetSingle, files)
+pool.close()
