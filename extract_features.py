@@ -53,7 +53,7 @@ def extractFecNetSingle(file):
         output_file_path = os.path.join(output_path, output_file_name)
         
         if(os.path.isfile(output_file_path)):
-            continue
+            return
         
         vidcap = VideoFileClip(file)
         frames = list(vidcap.iter_frames(fps=5))
@@ -68,7 +68,7 @@ def extractFecNetSingle(file):
             pd.DataFrame(emb).to_csv(output_file_path, header=None, index=False)
             print('here')
     except:
-        pass
+        return
 
             
 def fecnet_extract_in_parallel(concurreny_count, files, fn):
