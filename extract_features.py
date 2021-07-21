@@ -21,13 +21,14 @@ def extractFecNet(files, buff):
         id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
         output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
         output_file_path = os.path.join(output_path, output_file_name)
-        print(output_file_path)
+        
         if(os.path.isfile(output_file_path)):
             continue
         
         vidcap = VideoFileClip(file)
         frames = list(vidcap.iter_frames(fps=5))
         
+        print(len(frames))
         faces, prob = mtcnn(frames, return_prob=True)
         faces = [t.numpy() for t in faces]
         faces = np.array(faces)
