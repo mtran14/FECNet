@@ -88,7 +88,7 @@ def fecnet_extract_in_parallel(concurreny_count, files, fn):
     # leftovers  =  files[(concurreny_count * (len(files)//concurreny_count))  :  len(files)]
     # for i in range(len(leftovers)):    files_[i] += [leftovers[i]]
     files_ = np.array_split(files, len(files)//concurreny_count)
-    
+    random.shuffle(files_)
     for  files_list_  in files_:
         p = Process(target=fn, args=(files_list_, files_list_))
         Processes.append(p)
