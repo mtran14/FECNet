@@ -21,7 +21,7 @@ def extractFecNet(files, buff):
         id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
         output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
         output_file_path = os.path.join(output_path, output_file_name)
-        
+        print(output_file_path)
         if(os.path.isfile(output_file_path)):
             continue
         
@@ -31,7 +31,6 @@ def extractFecNet(files, buff):
         faces, prob = mtcnn(frames, return_prob=True)
         faces = [t.numpy() for t in faces]
         faces = np.array(faces)
-        print(faces.shape)
         if faces.any():
             faces = torch.Tensor(faces).view(-1,3,224,224)
             emb = model(faces)
