@@ -43,11 +43,10 @@ def extractFecNet(files):
         except:
             continue
             
-def extractFecNetSingle(file):
+def extractFecNetSingle(file, model, mtcnn):
     # try:
-    model = FECNet('FECNet.pt')
-    mtcnn = MTCNN(image_size=224)
-    print('done loading ')
+    # model = FECNet('FECNet.pt')
+    # mtcnn = MTCNN(image_size=224)
     file_path_split = file.split("/")
     id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
     output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
@@ -70,7 +69,12 @@ def extractFecNetSingle(file):
         print(output_file_path)
     # except:
     #     return
-
+    
+def extractFecNetNNN(files):
+    model = FECNet('FECNet.pt')
+    mtcnn = MTCNN(image_size=224)
+    for file in files:
+        extractFecNetSingle(file, model, mtcnn)
             
 def fecnet_extract_in_parallel(concurreny_count, files, fn):
     Processes = []
@@ -99,6 +103,14 @@ files = pd.read_csv(meta_file_path, header=None).values[:,0]
 # random.shuffle(files_)
 # for files in files_:
 #     extractFecNetMultiVid(files)
+
+model = FECNet('FECNet.pt')
+mtcnn = MTCNN(image_size=224)
+
 pool = multiprocessing.Pool(4)
-pool.map(extractFecNetSingle, files)
+files_ = np.array_split(files, concurreny_count)
+random.shuffle(files_)
+for files in files_:
+    pool.apply_async(extractFecNetNNN, args = (files, ))
 pool.close()
+pool.join()
