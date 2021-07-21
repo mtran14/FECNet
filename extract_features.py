@@ -11,9 +11,11 @@ import pandas as pd
 from multiprocessing import Process, Manager
 import random
 
+from pyrallel import ParallelProcessor
+
 output_path = "/shares/perception-temp/voxceleb2/fecnet/train/"
 
-def extractFecNet(files, buff):
+def extractFecNet(files):
     random.shuffle(files)
     model = FECNet('FECNet.pt')
     mtcnn = MTCNN(image_size=224)
@@ -56,12 +58,19 @@ def fecnet_extract_in_parallel(concurreny_count, files, fn):
     # block until all the threads finish (i.e. block until all function_x calls finish)
     for t in Processes:    t.join()
     
+def progress(p):
+
+    # print('Total task: {}, Added to queue: {}, Mapper Loaded: {}, Mapper Processed {}'.format(
+    #    p['total'], p['added'], p['loaded'], p['processed']))
+    if p['processed'] % 10 == 0:
+        print('Progress: {}%'.format(100.0 * p['processed'] / p['total']))
+        
 target_chunk_size = 5
 concurreny_count = 10
 meta_file_path = "../mm_ted/data/file_paths_fm.csv"
 files = pd.read_csv(meta_file_path, header=None).values[:,0]
 
-extractFecNet(files, files)
+# extractFecNet(files)
 # fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
 # concurreny_count = len(files) // target_chunk_size
 # 
@@ -69,3 +78,10 @@ extractFecNet(files, files)
 # random.shuffle(files_)
 # for files in files_:
 #     extractFecNetMultiVid(files)
+pp = ParallelProcessor(64, extractFecNet, progress=progress, progress_total=len(files))
+pp.start()
+
+pp.map(files)
+
+pp.task_done()
+pp.join()
