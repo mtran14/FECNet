@@ -21,28 +21,28 @@ def extractFecNetMultiVid(files):
     output_file_names = []
     random.shuffle(files)
     for file in files:
-        try:
-            file_path_split = file.split("/")
-            id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
-            output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
-            output_file_path = os.path.join(output_path, output_file_name)
-            
-            if(os.path.isfile(output_file_path)):
-                continue
-            
-            vidcap = VideoFileClip(file)
-            frames = list(vidcap.iter_frames(fps=5))
-            
-            faces, prob = mtcnn(frames, return_prob=True)
-            faces = [t.numpy() for t in faces]
-            faces = np.array(faces) # n_frames*3*224*224
-            
-            combine_faces.append(faces)
-            idx = idx + faces.shape[0]
-            chunk_sizes.append(idx)
-            output_file_names.append(output_file_path)
-        except:
+        # try:
+        file_path_split = file.split("/")
+        id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
+        output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
+        output_file_path = os.path.join(output_path, output_file_name)
+        
+        if(os.path.isfile(output_file_path)):
             continue
+        
+        vidcap = VideoFileClip(file)
+        frames = list(vidcap.iter_frames(fps=5))
+        
+        faces, prob = mtcnn(frames, return_prob=True)
+        faces = [t.numpy() for t in faces]
+        faces = np.array(faces) # n_frames*3*224*224
+        
+        combine_faces.append(faces)
+        idx = idx + faces.shape[0]
+        chunk_sizes.append(idx)
+        output_file_names.append(output_file_path)
+        # except:
+        #     continue
     all_faces = np.concatenate(combine_faces, axis=0)
     all_faces = torch.Tensor(all_faces).view(-1,3,224,224)
     emb = model(all_faces.cuda()).cpu()
