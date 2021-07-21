@@ -38,7 +38,7 @@ def extractFacenet(files, buff):
 
 def extractFecNet(files, buff):
     random.shuffle(files)
-    model = FECNet('FECNet.pt').cuda()
+    model = FECNet('FECNet.pt')
     mtcnn = MTCNN(image_size=224)
     for file in files:
         try:
