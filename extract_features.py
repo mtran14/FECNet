@@ -113,4 +113,3 @@ random.shuffle(files_)
 for files in files_:
     pool.apply_async(extractFecNetNNN, args = (files, ))
 pool.close()
-pool.join()
