@@ -105,7 +105,7 @@ files = pd.read_csv(meta_file_path, header=None).values[:,0]
 # random.shuffle(files_)
 # for files in files_:
 #     extractFecNetMultiVid(files)
-pp = ParallelProcessor(64, extractFecNetSingle, progress=progress, progress_total=len(files))
+pp = ParallelProcessor(4, extractFecNetSingle, progress=progress, progress_total=len(files))
 pp.start()
 
 pp.map(list(files))
