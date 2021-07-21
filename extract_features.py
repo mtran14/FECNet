@@ -127,7 +127,7 @@ target_chunk_size = 5
 concurreny_count = 10
 meta_file_path = "../mm_ted/data/file_paths_fm.csv"
 files = pd.read_csv(meta_file_path, header=None).values[:,0]
-
+random.shuffle(files_)
 fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
 # 
 # # extractFecNet(files)
