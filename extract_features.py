@@ -47,6 +47,7 @@ def extractFecNet(files):
             
 def extractFecNetSingle(file):
     # try:
+    print('here')
     file_path_split = file.split("/")
     id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
     output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
