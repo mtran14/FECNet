@@ -106,4 +106,5 @@ leftovers  =  files[(concurreny_count * (len(files)//concurreny_count))  :  len(
 for i in range(len(leftovers)):    files_[i] += [leftovers[i]]
 
 for files in files_:
+    print(files[0:3])
     extractFecNetMultiVid(files)
