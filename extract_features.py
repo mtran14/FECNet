@@ -15,7 +15,6 @@ output_path = "/shares/perception-temp/voxceleb2/fecnet/train/"
 def extractFecNet(files, buff):
     random.shuffle(files)
     model = FECNet('FECNet.pt')
-    print('model loaded to cpu ... ')
     mtcnn = MTCNN(image_size=224)
     for file in files:
         file_path_split = file.split("/")
@@ -32,6 +31,7 @@ def extractFecNet(files, buff):
         faces, prob = mtcnn(frames, return_prob=True)
         faces = [t.numpy() for t in faces]
         faces = np.array(faces)
+        print(faces.shape)
         if faces.any():
             faces = torch.Tensor(faces).view(-1,3,224,224)
             emb = model(faces)
