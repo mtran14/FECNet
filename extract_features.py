@@ -13,7 +13,7 @@ import multiprocessing
 import random
 # from deepface import DeepFace
 
-output_path = "/data/perception-temp/voxceleb2/fecnet/train/"
+output_path = "/shares/perception-temp/voxceleb2/fecnet/train/"
 model = FECNet('FECNet.pt')
 mtcnn = MTCNN(image_size=224)
 
@@ -83,13 +83,13 @@ def extractFecNetSingle(file):
         faces, prob = mtcnn(frames, return_prob=True)
         faces = [t.numpy() for t in faces]
         faces = np.array(faces)
-        print(faces.shape)
+        # print(faces.shape)
         if faces.any():
             faces = torch.Tensor(faces).view(-1,3,224,224)
             emb = model(faces)
             emb = emb.detach().numpy()
             pd.DataFrame(emb).to_csv(output_file_path, header=None, index=False)
-            print(output_file_path)
+            # print(output_file_path)
     except:
         return
 
