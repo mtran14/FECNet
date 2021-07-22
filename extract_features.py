@@ -14,6 +14,8 @@ import random
 # from deepface import DeepFace
 
 output_path = "/data/perception-temp/voxceleb2/fecnet/train/"
+model = FECNet('FECNet.pt')
+mtcnn = MTCNN(image_size=224)
 
 def extractFacenet(files, buff):
     for file in files:
@@ -66,9 +68,6 @@ def extractFecNet(files, buff):
             continue
             
 def extractFecNetSingle(file):
-    # try:
-    model = FECNet('FECNet.pt')
-    mtcnn = MTCNN(image_size=224)
     try:
         file_path_split = file.split("/")
         id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
@@ -128,8 +127,9 @@ concurreny_count = 100
 meta_file_path = "../mm_ted/data/file_paths_fm.csv"
 files = pd.read_csv(meta_file_path, header=None).values[:,0]
 random.shuffle(files)
-fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
-# 
+# fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
+for file in files:
+    extractFecNetSingle(file)
 # # extractFecNet(files)
 # # fecnet_extract_in_parallel(concurreny_count, files, extractFecNet)
 # # concurreny_count = len(files) // target_chunk_size
