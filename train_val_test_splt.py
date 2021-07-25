@@ -37,7 +37,7 @@ for vfile in os.listdir(input_video_path):
     for pid in X_val:
         if(pid in vfile):
             current_output_path = output_path_val
-    if(not current_output_path):
+    if(current_output_path):
         current_output_video_path = os.path.join(current_output_path, vfile)
         copyfile(current_video_path, current_output_video_path)
     else:
