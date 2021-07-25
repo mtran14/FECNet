@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from shutil import copyfile
+import os
 
 data_type = 'mosi'
 meta_data_path = '/shares/perception-working/minh/Sentiment_Annotation_2021.csv'
