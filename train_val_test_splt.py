@@ -30,7 +30,6 @@ if(data_type == 'mosi'):
         current_video_path = os.path.join(input_video_path, vfile)
         current_output_path = None
         for pid in X_train:
-            pid = str(pid)
             if(pid in vfile):
                 current_output_path = output_path_train
         for pid in X_test:
@@ -54,6 +53,7 @@ elif(data_type == 'cremad'):
     output_path_val = output_dir + 'val/'
 
     X = user_ids = list(range(1001, 1092))
+    X = [str(x) for x in X]
     y = np.ones(len(X))
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
