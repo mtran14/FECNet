@@ -30,6 +30,7 @@ if(data_type == 'mosi'):
         current_video_path = os.path.join(input_video_path, vfile)
         current_output_path = None
         for pid in X_train:
+            pid = str(pid)
             if(pid in vfile):
                 current_output_path = output_path_train
         for pid in X_test:
