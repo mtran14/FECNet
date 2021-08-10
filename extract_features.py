@@ -71,30 +71,30 @@ def extractFecNet(files, buff):
             continue
             
 def extractFecNetSingle(file, output_dir):
-    try:
+    # try:
         # file_path_split = file.split("/")
         # id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
         # output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
         # output_file_path = os.path.join(output_path, output_file_name)
         
-        output_file_path = os.path.join(output_dir, file.split('.')[0]+'.csv')
-        if(os.path.isfile(output_file_path)):
-            return
-
-        vidcap = VideoFileClip(file)
-        frames = list(vidcap.iter_frames(fps=5))
-
-        faces, prob = mtcnn(frames, return_prob=True)
-        faces = [t.numpy() for t in faces]
-        faces = np.array(faces)
-        # print(faces.shape)
-        if faces.any():
-            faces = torch.Tensor(faces).view(-1,3,224,224)
-            emb = model(faces)
-            emb = emb.detach().numpy()
-            pd.DataFrame(emb).to_csv(output_file_path, header=None, index=False)
-    except:
+    output_file_path = os.path.join(output_dir, file.split('.')[0]+'.csv')
+    if(os.path.isfile(output_file_path)):
         return
+
+    vidcap = VideoFileClip(file)
+    frames = list(vidcap.iter_frames(fps=5))
+
+    faces, prob = mtcnn(frames, return_prob=True)
+    faces = [t.numpy() for t in faces]
+    faces = np.array(faces)
+    # print(faces.shape)
+    if faces.any():
+        faces = torch.Tensor(faces).view(-1,3,224,224)
+        emb = model(faces)
+        emb = emb.detach().numpy()
+        pd.DataFrame(emb).to_csv(output_file_path, header=None, index=False)
+    # except:
+    #     return
 
             
 def fecnet_extract_in_parallel(concurreny_count, files, fn):
