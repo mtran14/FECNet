@@ -93,6 +93,7 @@ def extractFecNetSingle(file, output_dir):
         emb = model(faces)
         emb = emb.detach().numpy()
         pd.DataFrame(emb).to_csv(output_file_path, header=None, index=False)
+        print(output_file_path, emb.shape)
     # except:
     #     return
 
