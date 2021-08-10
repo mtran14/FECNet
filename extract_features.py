@@ -76,8 +76,9 @@ def extractFecNetSingle(file, output_dir):
         # id1, id2, fname = file_path_split[-3], file_path_split[-2], file_path_split[-1]
         # output_file_name = id1 + '_' + id2 + '_' + fname.split('.')[0] + '.csv'
         # output_file_path = os.path.join(output_path, output_file_name)
-        
-    output_file_path = os.path.join(output_dir, file.split('.')[0]+'.csv')
+    fname = file.split('/')[-1]
+    output_file_path = os.path.join(output_dir, fname.split('.')[0]+'.csv')
+    print(output_file_path)
     if(os.path.isfile(output_file_path)):
         return
 
@@ -93,7 +94,7 @@ def extractFecNetSingle(file, output_dir):
         emb = model(faces)
         emb = emb.detach().numpy()
         pd.DataFrame(emb).to_csv(output_file_path, header=None, index=False)
-        print(output_file_path, emb.shape)
+        print(emb.shape)
     # except:
     #     return
 
